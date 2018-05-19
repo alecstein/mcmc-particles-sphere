@@ -51,11 +51,6 @@ def get_cosines(config, R):
     cosines_matrix =  np.sum((config[:, np.newaxis]*config),axis=2)/R**2
     return cosines_matrix[np.triu_indices(n_particles,1)]
 
-def get_energy(dists, LJ_depth, LJ_loc):
-    """Returns Lennard-Jones energy of a given configuration."""
-    
-    return np.sum(LJ_depth*((LJ_loc/dists)**12 - 2*(LJ_loc/dists)**6))
-
 normalize_vector = lambda x: x/np.sqrt(x.dot(x))
 
 def displace_particle(vec, sigma, R):
