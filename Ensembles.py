@@ -22,6 +22,9 @@ class BaseEnsemble(object):
         # Radial distribution function
         self.RDF = None
 
+        # Other parameters
+        self.sigma = 0.1
+
     def monte_carlo_move(self):
         pass
 
@@ -54,8 +57,8 @@ class BaseEnsemble(object):
 
 class NVTEnsemble(BaseEnsemble):
 
-    def __init__(self, n_particles, radius = 1, beta = 1):
-        BaseEnsemble.__init___(self, n_particles, radius, beta)
+    def __init__(self, n_particles = 10, radius = 1, beta = 1):
+        BaseEnsemble.__init__(self, n_particles, radius, beta)
                  
     def try_displacement_move(self):
         """Take one particle and do one 'Monte-Carlo move.'  
