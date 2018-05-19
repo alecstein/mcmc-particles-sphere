@@ -114,32 +114,26 @@ class muVTEnsemble(NVTEnsemble):
             self.config = trial_config
     
     def try_delete_move(self):
+        if self.n_particles == 0:
+            pass
+        
         trial_config = np.copy(self.config)
-        # Delete a particle at random
         trial_config = np.delete(trial_config, np.random.randint(self.n_particles), axis = 0)
 
         dE = self.get_energy(trial_config) - self.get_energy(self.config)
 
         exp_argument = -self.beta*dE + self.beta*self.mu + np.log(self.area/self.n_particles)
-        
         q = np.float64(np.exp(min(0,exp_argument)))
         p = np.random.random()
         if p <= q:
             self.config = trial_config
+            self.n_particles -= 1
     
     def monte_carlo_move(self):
-
-        self.n_particles = len(self.config)
-
         r = np.random.random()
-
         if r <= 0.25:
             self.try_delete_move()
-            
         elif r > 0.25 and r <= 0.5:
             self.try_insert_move()
-
         else:
             self.try_displacement_move()
-
-        print(self.n_particles)
